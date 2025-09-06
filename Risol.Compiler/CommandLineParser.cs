@@ -24,7 +24,7 @@ public static class CommandLineParser
                         break;
                     case "-o" or "--out":
                         options.OutputFile = i + 1 < args.Length
-                            ? File.Open(args[++i], FileMode.OpenOrCreate)
+                            ? new FileInfo(args[++i])
                             : throw new CommandLineException($"Missing filename after '{arg}'");
                         break;
                     case "-t" or "--target":
@@ -47,7 +47,7 @@ public static class CommandLineParser
             {
                 throw new CommandLineException($"Invalid source file extension '{extension}'");
             }
-            options.SourceFile = File.Open(arg, FileMode.Open);
+            options.SourceFile = new FileInfo(arg);
         }
 
         return options;

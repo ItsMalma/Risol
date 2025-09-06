@@ -58,7 +58,12 @@ public class RisolCompiler
             ShowHelp(Console.Error);
             return 1;
         }
-        CompilerConfiguration configuration = new(options);
+        ICompilerConfiguration configuration = new CompilerConfiguration(options)
+        {
+            ExpectEntryPoint = true
+        };
+        IArtifactProvider artifactProvider = new ArtifactProvider();
+        ISource source = new UrlSource(options.SourceFile);
         return 0;
     }
 
