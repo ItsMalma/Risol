@@ -11,4 +11,6 @@ public class CompilerConfiguration(CompilerOptions options) : ICompilerConfigura
     };
 
     private readonly CompilerOptions _compilerOptions = options;
+
+    private readonly ModuleManager _moduleManager = new();
 }

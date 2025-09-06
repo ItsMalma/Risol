@@ -1,0 +1,2 @@
+fun read(): char;
+fun readLine(): string;

@@ -19,6 +19,7 @@ public class RisolCompiler
         writer.WriteLine("  -h | --help               Display this information");
         writer.WriteLine("  -o | --out <file>         Place the output into <file>");
         writer.WriteLine("  -t | --target <target>    Specify compile target (js)");
+        writer.WriteLine();
     }
 
     private static CompilerOptions CreateCompilerOptions(string[] args, out int exitCode)
@@ -76,8 +77,9 @@ public class RisolCompiler
                 Environment.Exit(exitCode);
             }
         }
-        catch
+        catch (Exception ex)
         {
+            ShowErrors(Console.Error, ex.Message);
             Environment.Exit(253);
         }
     }

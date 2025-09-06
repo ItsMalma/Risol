@@ -1,0 +1,2 @@
+fun write(value: string);
+fun writeLine(value: string);
