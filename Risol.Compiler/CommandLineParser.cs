@@ -2,9 +2,9 @@ namespace Risol.Compiler;
 
 public static class CommandLineParser
 {
-    public static CompilerOptions Parse(string[] args)
+    public static Options Parse(string[] args)
     {
-        CompilerOptions options = new();
+        Options options = new();
 
         for (int i = 0; i < args.Length; i++)
         {
@@ -31,7 +31,7 @@ public static class CommandLineParser
                         options.Target = i + 1 < args.Length
                             ? args[++i] switch
                             {
-                                "js" => CompileTarget.JavaScript,
+                                "js" => Target.JavaScript,
                                 _ => throw new CommandLineException($"Invalid target '{args[i]}' after '{arg}'")
                             }
                             : throw new CommandLineException($"Missing target after '{arg}'");

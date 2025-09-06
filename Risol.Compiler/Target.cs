@@ -1,6 +1,6 @@
 namespace Risol.Compiler;
 
-public enum CompileTarget
+public enum Target
 {
     JavaScript
 }

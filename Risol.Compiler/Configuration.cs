@@ -2,11 +2,11 @@ using Risol.Compiler.JS;
 
 namespace Risol.Compiler;
 
-public class CompilerConfiguration(CompilerOptions options) : ICompilerConfiguration
+public class Configuration(Options options) : IConfiguration
 {
     public IBackend Backend { get; } = options.Target switch
     {
-        CompileTarget.JavaScript => new JSBackend(),
+        Target.JavaScript => new JSBackend(),
         _ => throw new NotImplementedException()
     };
 
@@ -18,7 +18,7 @@ public class CompilerConfiguration(CompilerOptions options) : ICompilerConfigura
             {
                 string extension = _compilerOptions.Target switch
                 {
-                    CompileTarget.JavaScript => ".js",
+                    Target.JavaScript => ".js",
                     _ => ""
                 };
                 string name = _compilerOptions.SourceFile != null
@@ -35,7 +35,7 @@ public class CompilerConfiguration(CompilerOptions options) : ICompilerConfigura
 
     public bool ExpectEntryPoint { get; set; } = false;
 
-    private readonly CompilerOptions _compilerOptions = options;
+    private readonly Options _compilerOptions = options;
 
     private readonly ModuleManager _moduleManager = new();
 }

@@ -2,6 +2,16 @@
 
 public class RisolCompiler
 {
+    private readonly ISource _source;
+
+    private readonly IConfiguration _configuration;
+
+    private RisolCompiler(ISource source, ISource[] embeddedSources, IConfiguration configuration, IContext context)
+    {
+        _source = source;
+        _configuration = configuration;
+    }
+
     private static void ShowErrors(TextWriter writer, params string[] errors)
     {
         foreach (string error in errors)
@@ -22,10 +32,10 @@ public class RisolCompiler
         writer.WriteLine();
     }
 
-    private static CompilerOptions CreateCompilerOptions(string[] args, out int exitCode)
+    private static Options CreateOptions(string[] args, out int exitCode)
     {
         exitCode = 0;
-        CompilerOptions options = new();
+        Options options = new();
         try
         {
             options = CommandLineParser.Parse(args);
@@ -44,7 +54,7 @@ public class RisolCompiler
         return options;
     }
 
-    private static int Compile(CompilerOptions options)
+    private static int Compile(Options options)
     {
         if (options.SourceFile == null)
         {
@@ -58,12 +68,14 @@ public class RisolCompiler
             ShowHelp(Console.Error);
             return 1;
         }
-        ICompilerConfiguration configuration = new CompilerConfiguration(options)
+        IConfiguration configuration = new Configuration(options)
         {
             ExpectEntryPoint = true
         };
         IArtifactProvider artifactProvider = new ArtifactProvider();
-        ISource source = new UrlSource(options.SourceFile);
+        ISource source = new UriSource(options.SourceFile);
+        IContext context = new Context(source, artifactProvider, configuration);
+        RisolCompiler compiler = new(source, [], configuration, context);
         return 0;
     }
 
@@ -71,7 +83,7 @@ public class RisolCompiler
     {
         try
         {
-            CompilerOptions options = CreateCompilerOptions(args, out int exitCode);
+            Options options = CreateOptions(args, out int exitCode);
             if (exitCode != 0)
             {
                 Environment.Exit(exitCode);

@@ -1,6 +1,6 @@
 namespace Risol.Compiler;
 
-public class UrlSource : ISource
+public class UriSource : ISource
 {
     private readonly static Uri _currentDirectory = new(Path.GetFullPath("."));
 
@@ -14,7 +14,7 @@ public class UrlSource : ISource
 
     protected readonly ModuleManager _moduleManager;
 
-    public UrlSource(FileInfo file)
+    public UriSource(FileInfo file)
     {
         Uri fileUri = new(Path.GetFullPath(file.FullName));
 

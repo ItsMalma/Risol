@@ -1,6 +1,6 @@
 namespace Risol.Compiler;
 
-public interface ICompilerConfiguration
+public interface IConfiguration
 {
     public IBackend Backend { get; }
 

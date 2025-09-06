@@ -1,6 +1,6 @@
 namespace Risol.Compiler;
 
-public class CompilerOptions
+public class Options
 {
     public FileInfo? SourceFile { get; set; } = null;
 
@@ -8,5 +8,5 @@ public class CompilerOptions
 
     public FileInfo? OutputFile { get; set; } = null;
 
-    public CompileTarget Target { get; set; } = CompileTarget.JavaScript;
+    public Target Target { get; set; } = Target.JavaScript;
 }
